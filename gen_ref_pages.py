@@ -13,7 +13,7 @@ _langs = ["en", "zh"]
 
 
 def _gen_page(lang):
-    full_doc_path = Path(f"{lang}/reference/models.md")
+    full_doc_path = Path(f"docs/{lang}/reference/models.md")
     _logger.info(f"Generating reference page: {full_doc_path}")
     with open(full_doc_path, "w") as fd:
         print("# Models", file=fd)
@@ -36,9 +36,7 @@ def _gen_page(lang):
             try:
                 print(f"\n\n## {parts[-1]}", file=fd)
                 identifier = ".".join(parts)  # eg: mindcv.models.resnet
-                mod = importlib.import_module(identifier)
-                for mem in sorted(set(mod.__all__)):
-                    print(f"\n### ::: {identifier}.{mem}", file=fd)
+                print(f"\n### ::: {identifier}", file=fd)
             except Exception as err:
                 _logger.warning(f"Cannot generate reference of {identifier}, error: {err}.")
 
@@ -57,8 +55,3 @@ def on_startup(command, dirty):
 def on_shutdown():
     for lang in _langs:
         _del_page(lang)
-
-
-if __name__ == "__main__":
-    _gen_page("zh")
-    import mindcv.models.bit

@@ -92,6 +92,13 @@
         <xhtml:link rel="alternate" hreflang="zh" href="https://mindspore-lab.github.io/mindcv/zh/reference/models.layers/"/>
     </url>
     <url>
+        <loc>https://mindspore-lab.github.io/mindcv/reference/models/</loc>
+        <lastmod>2024-07-31</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://mindspore-lab.github.io/mindcv/reference/models/"/>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://mindspore-lab.github.io/mindcv/zh/reference/models/"/>
+    </url>
+    <url>
         <loc>https://mindspore-lab.github.io/mindcv/reference/optim/</loc>
         <lastmod>2024-07-31</lastmod>
         <changefreq>daily</changefreq>
@@ -239,6 +246,13 @@
         <xhtml:link rel="alternate" hreflang="en" href="https://mindspore-lab.github.io/mindcv/reference/models.layers/"/>
     </url>
     <url>
+        <loc>https://mindspore-lab.github.io/mindcv/zh/reference/models/</loc>
+        <lastmod>2024-07-31</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://mindspore-lab.github.io/mindcv/zh/reference/models/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://mindspore-lab.github.io/mindcv/reference/models/"/>
+    </url>
+    <url>
         <loc>https://mindspore-lab.github.io/mindcv/zh/reference/optim/</loc>
         <lastmod>2024-07-31</lastmod>
         <changefreq>daily</changefreq>
@@ -293,11 +307,5 @@
         <changefreq>daily</changefreq>
         <xhtml:link rel="alternate" hreflang="zh" href="https://mindspore-lab.github.io/mindcv/zh/tutorials/quick_start/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://mindspore-lab.github.io/mindcv/tutorials/quick_start/"/>
-    </url>
-    <url>
-        <loc>https://mindspore-lab.github.io/mindcv/zh/reference/models/</loc>
-        <lastmod>2024-07-31</lastmod>
-        <changefreq>daily</changefreq>
-        <xhtml:link rel="alternate" hreflang="zh" href="https://mindspore-lab.github.io/mindcv/zh/reference/models/"/>
     </url>
 </urlset>
