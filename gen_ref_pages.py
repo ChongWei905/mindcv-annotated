@@ -13,7 +13,7 @@ _langs = ["en", "zh"]
 
 
 def _gen_page(lang):
-    full_doc_path = Path(f"docs/{lang}/reference/models.md")
+    full_doc_path = Path(f"{lang}/reference/models.md")
     _logger.info(f"Generating reference page: {full_doc_path}")
     with open(full_doc_path, "w") as fd:
         print("# Models", file=fd)
@@ -57,3 +57,8 @@ def on_startup(command, dirty):
 def on_shutdown():
     for lang in _langs:
         _del_page(lang)
+
+
+if __name__ == "__main__":
+    _gen_page("zh")
+    import mindcv.models.bit
