@@ -10,7 +10,7 @@ import numpy as np
 import mindspore.common.initializer as init
 from mindspore import Parameter, Tensor
 from mindspore import dtype as mstype
-from mindspore import nn, ops
+from mindspore import mint, nn
 
 from .helpers import build_model_with_cfg
 from .layers.drop_path import DropPath
@@ -69,11 +69,10 @@ class GRN(nn.Cell):
         super().__init__()
         self.gamma = Parameter(Tensor(np.zeros([1, 1, 1, dim]), mstype.float32))
         self.beta = Parameter(Tensor(np.zeros([1, 1, 1, dim]), mstype.float32))
-        self.norm = ops.LpNorm(axis=[1, 2], p=2, keep_dims=True)
 
     def construct(self, x: Tensor) -> Tensor:
-        gx = self.norm(x)
-        nx = gx / (ops.mean(gx, axis=-1, keep_dims=True) + 1e-6)
+        gx = mint.norm(x, p=2, dim=(1, 2), keepdim=True)
+        nx = gx / (mint.mean(gx, dim=-1, keepdim=True) + 1e-6)
         return self.gamma * (x * nx) + self.beta + x
 
 
@@ -96,9 +95,9 @@ class ConvNextLayerNorm(nn.LayerNorm):
         if self.norm_axis == -1:
             y, _, _ = self.layer_norm(input_x, self.gamma, self.beta)
         else:
-            input_x = ops.transpose(input_x, (0, 2, 3, 1))
+            input_x = mint.permute(input_x, (0, 2, 3, 1))
             y, _, _ = self.layer_norm(input_x, self.gamma, self.beta)
-            y = ops.transpose(y, (0, 3, 1, 2))
+            y = mint.permute(y, (0, 3, 1, 2))
         return y
 
 
@@ -126,12 +125,12 @@ class Block(nn.Cell):
         super().__init__()
         self.dwconv = nn.Conv2d(dim, dim, kernel_size=7, group=dim, has_bias=True)  # depthwise conv
         self.norm = ConvNextLayerNorm((dim,), epsilon=1e-6)
-        self.pwconv1 = nn.Dense(dim, 4 * dim)  # pointwise/1x1 convs, implemented with Dense layers
-        self.act = nn.GELU()
+        self.pwconv1 = mint.nn.Linear(dim, 4 * dim)  # pointwise/1x1 convs, implemented with Dense layers
+        self.act = mint.nn.GELU()
         self.use_grn = use_grn
         if use_grn:
             self.grn = GRN(4 * dim)
-        self.pwconv2 = nn.Dense(4 * dim, dim)
+        self.pwconv2 = mint.nn.Linear(4 * dim, dim)
         self.gamma_ = Parameter(Tensor(layer_scale_init_value * np.ones((dim)), dtype=mstype.float32),
                                 requires_grad=True) if layer_scale_init_value > 0 else None
         self.drop_path = DropPath(drop_path) if drop_path > 0.0 else Identity()
@@ -139,7 +138,7 @@ class Block(nn.Cell):
     def construct(self, x: Tensor) -> Tensor:
         downsample = x
         x = self.dwconv(x)
-        x = ops.transpose(x, (0, 2, 3, 1))
+        x = mint.permute(x, (0, 2, 3, 1))
         x = self.norm(x)
         x = self.pwconv1(x)
         x = self.act(x)
@@ -148,7 +147,7 @@ class Block(nn.Cell):
         x = self.pwconv2(x)
         if self.gamma_ is not None:
             x = self.gamma_ * x
-        x = ops.transpose(x, (0, 3, 1, 2))
+        x = mint.permute(x, (0, 3, 1, 2))
         x = downsample + self.drop_path(x)
         return x
 
@@ -226,7 +225,7 @@ class ConvNeXt(nn.Cell):
             stages[3]
         ])
         self.norm = ConvNextLayerNorm((dims[-1],), epsilon=1e-6)  # final norm layer
-        self.classifier = nn.Dense(dims[-1], num_classes)  # classifier
+        self.classifier = mint.nn.Linear(dims[-1], num_classes)  # classifier
         self.head_init_scale = head_init_scale
         self._initialize_weights()
 

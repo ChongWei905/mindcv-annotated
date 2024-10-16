@@ -7,10 +7,9 @@ import math
 from typing import Tuple, Union
 
 import mindspore.common.initializer as init
-from mindspore import Tensor, nn, ops
+from mindspore import Tensor, mint, nn
 
 from .helpers import load_pretrained
-from .layers.compatibility import Dropout
 from .layers.pooling import GlobalAvgPooling
 from .registry import register_model
 
@@ -50,7 +49,7 @@ class BasicConv2d(nn.Cell):
         super().__init__()
         self.conv = nn.Conv2d(in_channels, out_channels, kernel_size, stride,
                               padding=padding, pad_mode=pad_mode)
-        self.relu = nn.ReLU()
+        self.relu = mint.nn.ReLU()
 
     def construct(self, x: Tensor) -> Tensor:
         x = self.conv(x)
@@ -82,7 +81,7 @@ class Inception(nn.Cell):
             BasicConv2d(ch5x5red, ch5x5, kernel_size=5),
         ])
         self.b4 = nn.SequentialCell([
-            nn.MaxPool2d(kernel_size=3, stride=1, pad_mode="same"),
+            mint.nn.MaxPool2d(kernel_size=3, stride=1, padding=1),
             BasicConv2d(in_channels, pool_proj, kernel_size=1),
         ])
 
@@ -91,7 +90,7 @@ class Inception(nn.Cell):
         branch2 = self.b2(x)
         branch3 = self.b3(x)
         branch4 = self.b4(x)
-        return ops.concat((branch1, branch2, branch3, branch4), axis=1)
+        return mint.concat((branch1, branch2, branch3, branch4), dim=1)
 
 
 class InceptionAux(nn.Cell):
@@ -104,13 +103,13 @@ class InceptionAux(nn.Cell):
         drop_rate: float = 0.7,
     ) -> None:
         super().__init__()
-        self.avg_pool = nn.AvgPool2d(kernel_size=5, stride=3)
+        self.avg_pool = mint.nn.AvgPool2d(kernel_size=5, stride=3)
         self.conv = BasicConv2d(in_channels, 128, kernel_size=1)
-        self.fc1 = nn.Dense(2048, 1024)
-        self.fc2 = nn.Dense(1024, num_classes)
+        self.fc1 = mint.nn.Linear(2048, 1024)
+        self.fc2 = mint.nn.Linear(1024, num_classes)
         self.flatten = nn.Flatten()
-        self.relu = nn.ReLU()
-        self.dropout = Dropout(p=drop_rate)
+        self.relu = mint.nn.ReLU()
+        self.dropout = mint.nn.Dropout(p=drop_rate)
 
     def construct(self, x: Tensor) -> Tensor:
         x = self.avg_pool(x)
@@ -146,22 +145,22 @@ class GoogLeNet(nn.Cell):
         super().__init__()
         self.aux_logits = aux_logits
         self.conv1 = BasicConv2d(in_channels, 64, kernel_size=7, stride=2)
-        self.maxpool1 = nn.MaxPool2d(kernel_size=3, stride=2, pad_mode="same")
+        self.maxpool1 = mint.nn.MaxPool2d(kernel_size=3, stride=2, ceil_mode=True)
 
         self.conv2 = BasicConv2d(64, 64, kernel_size=1)
         self.conv3 = BasicConv2d(64, 192, kernel_size=3)
-        self.maxpool2 = nn.MaxPool2d(kernel_size=3, stride=2, pad_mode="same")
+        self.maxpool2 = mint.nn.MaxPool2d(kernel_size=3, stride=2, ceil_mode=True)
 
         self.inception3a = Inception(192, 64, 96, 128, 16, 32, 32)
         self.inception3b = Inception(256, 128, 128, 192, 32, 96, 64)
-        self.maxpool3 = nn.MaxPool2d(kernel_size=3, stride=2, pad_mode="same")
+        self.maxpool3 = mint.nn.MaxPool2d(kernel_size=3, stride=2, ceil_mode=True)
 
         self.inception4a = Inception(480, 192, 96, 208, 16, 48, 64)
         self.inception4b = Inception(512, 160, 112, 224, 24, 64, 64)
         self.inception4c = Inception(512, 128, 128, 256, 24, 64, 64)
         self.inception4d = Inception(512, 112, 144, 288, 32, 64, 64)
         self.inception4e = Inception(528, 256, 160, 320, 32, 128, 128)
-        self.maxpool4 = nn.MaxPool2d(kernel_size=2, stride=2, pad_mode="same")
+        self.maxpool4 = mint.nn.MaxPool2d(kernel_size=2, stride=2, ceil_mode=True)
 
         self.inception5a = Inception(832, 256, 160, 320, 32, 128, 128)
         self.inception5b = Inception(832, 384, 192, 384, 48, 128, 128)
@@ -171,8 +170,8 @@ class GoogLeNet(nn.Cell):
             self.aux2 = InceptionAux(528, num_classes, drop_rate=drop_rate_aux)
 
         self.pool = GlobalAvgPooling()
-        self.dropout = Dropout(p=drop_rate)
-        self.classifier = nn.Dense(1024, num_classes)
+        self.dropout = mint.nn.Dropout(p=drop_rate)
+        self.classifier = mint.nn.Linear(1024, num_classes)
         self._initialize_weights()
 
     def _initialize_weights(self):

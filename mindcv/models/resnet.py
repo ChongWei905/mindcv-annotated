@@ -6,7 +6,7 @@ Refer to Deep Residual Learning for Image Recognition.
 from typing import List, Optional, Type, Union
 
 import mindspore.common.initializer as init
-from mindspore import Tensor, nn
+from mindspore import Tensor, mint, nn
 
 from .helpers import build_model_with_cfg
 from .layers.pooling import GlobalAvgPooling
@@ -71,14 +71,14 @@ class BasicBlock(nn.Cell):
     ) -> None:
         super().__init__()
         if norm is None:
-            norm = nn.BatchNorm2d
+            norm = mint.nn.BatchNorm2d
         assert groups == 1, "BasicBlock only supports groups=1"
         assert base_width == 64, "BasicBlock only supports base_width=64"
 
         self.conv1 = nn.Conv2d(in_channels, channels, kernel_size=3,
                                stride=stride, padding=1, pad_mode="pad")
         self.bn1 = norm(channels)
-        self.relu = nn.ReLU()
+        self.relu = mint.nn.ReLU()
         self.conv2 = nn.Conv2d(channels, channels, kernel_size=3,
                                stride=1, padding=1, pad_mode="pad")
         self.bn2 = norm(channels)
@@ -122,7 +122,7 @@ class Bottleneck(nn.Cell):
     ) -> None:
         super().__init__()
         if norm is None:
-            norm = nn.BatchNorm2d
+            norm = mint.nn.BatchNorm2d
 
         width = int(channels * (base_width / 64.0)) * groups
 
@@ -134,7 +134,7 @@ class Bottleneck(nn.Cell):
         self.conv3 = nn.Conv2d(width, channels * self.expansion,
                                kernel_size=1, stride=1)
         self.bn3 = norm(channels * self.expansion)
-        self.relu = nn.ReLU()
+        self.relu = mint.nn.ReLU()
         self.down_sample = down_sample
 
     def construct(self, x: Tensor) -> Tensor:
@@ -186,7 +186,7 @@ class ResNet(nn.Cell):
     ) -> None:
         super().__init__()
         if norm is None:
-            norm = nn.BatchNorm2d
+            norm = mint.nn.BatchNorm2d
 
         self.norm: nn.Cell = norm  # add type hints to make pylint happy
         self.input_channels = 64
@@ -196,9 +196,9 @@ class ResNet(nn.Cell):
         self.conv1 = nn.Conv2d(in_channels, self.input_channels, kernel_size=7,
                                stride=2, pad_mode="pad", padding=3)
         self.bn1 = norm(self.input_channels)
-        self.relu = nn.ReLU()
+        self.relu = mint.nn.ReLU()
         self.feature_info = [dict(chs=self.input_channels, reduction=2, name="relu")]
-        self.max_pool = nn.MaxPool2d(kernel_size=3, stride=2, pad_mode="same")
+        self.max_pool = mint.nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
         self.layer1 = self._make_layer(block, 64, layers[0])
         self.feature_info.append(dict(chs=block.expansion * 64, reduction=4, name="layer1"))
         self.layer2 = self._make_layer(block, 128, layers[1], stride=2)
@@ -210,7 +210,7 @@ class ResNet(nn.Cell):
 
         self.pool = GlobalAvgPooling()
         self.num_features = 512 * block.expansion
-        self.classifier = nn.Dense(self.num_features, num_classes)
+        self.classifier = mint.nn.Linear(self.num_features, num_classes)
 
         self._initialize_weights()
 
@@ -224,10 +224,10 @@ class ResNet(nn.Cell):
                 if cell.bias is not None:
                     cell.bias.set_data(
                         init.initializer('zeros', cell.bias.shape, cell.bias.dtype))
-            elif isinstance(cell, nn.BatchNorm2d):
-                cell.gamma.set_data(init.initializer('ones', cell.gamma.shape, cell.gamma.dtype))
-                cell.beta.set_data(init.initializer('zeros', cell.beta.shape, cell.beta.dtype))
-            elif isinstance(cell, nn.Dense):
+            elif isinstance(cell, mint.nn.BatchNorm2d):
+                cell.running_var.set_data(init.initializer('ones', cell.running_var.shape, cell.running_var.dtype))
+                cell.running_mean.set_data(init.initializer('zeros', cell.running_mean.shape, cell.running_mean.dtype))
+            elif isinstance(cell, mint.nn.Linear):
                 cell.weight.set_data(
                     init.initializer(init.HeUniform(mode='fan_in', nonlinearity='sigmoid'),
                                      cell.weight.shape, cell.weight.dtype))

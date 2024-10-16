@@ -5,12 +5,12 @@ from typing import Callable, Optional
 import numpy as np
 
 import mindspore as ms
-from mindspore import Parameter, Tensor, nn, ops
+from mindspore import Parameter, Tensor, mint, nn, ops
 from mindspore.common.initializer import TruncatedNormal, XavierUniform, initializer
 
 from .helpers import load_pretrained
-from .layers.compatibility import Dropout
 from .layers.drop_path import DropPath
+from .layers.extend_bmm import ExtendBatchMatMul
 from .layers.mlp import Mlp
 from .layers.patch_dropout import PatchDropout
 from .layers.patch_embed import PatchEmbed
@@ -92,39 +92,36 @@ class Attention(nn.Cell):
         self.head_dim = dim // num_heads
         self.scale = Tensor(self.head_dim ** -0.5)
 
-        self.qkv = nn.Dense(dim, dim * 3, has_bias=qkv_bias)
+        self.qkv = mint.nn.Linear(dim, dim * 3, bias=qkv_bias)
         self.q_norm = norm_layer((self.head_dim,)) if qk_norm else nn.Identity()
         self.k_norm = norm_layer((self.head_dim,)) if qk_norm else nn.Identity()
 
-        self.attn_drop = Dropout(attn_drop)
-        self.proj = nn.Dense(dim, dim)
-        self.proj_drop = Dropout(proj_drop)
+        self.attn_drop = mint.nn.Dropout(attn_drop)
+        self.proj = mint.nn.Linear(dim, dim)
+        self.proj_drop = mint.nn.Dropout(proj_drop)
 
-        self.mul = ops.Mul()
-        self.reshape = ops.Reshape()
-        self.transpose = ops.Transpose()
         self.unstack = ops.Unstack(axis=0)
-        self.attn_matmul_v = ops.BatchMatMul()
-        self.q_matmul_k = ops.BatchMatMul(transpose_b=True)
+        self.attn_matmul_v = ExtendBatchMatMul()
+        self.q_matmul_k = ExtendBatchMatMul(transpose_b=True)
 
     def construct(self, x):
         b, n, c = x.shape
         qkv = self.qkv(x)
-        qkv = self.reshape(qkv, (b, n, 3, self.num_heads, self.head_dim))
-        qkv = self.transpose(qkv, (2, 0, 3, 1, 4))
+        qkv = mint.reshape(qkv, (b, n, 3, self.num_heads, self.head_dim))
+        qkv = mint.permute(qkv, (2, 0, 3, 1, 4))
         q, k, v = self.unstack(qkv)
         q, k = self.q_norm(q), self.k_norm(k)
 
-        q = self.mul(q, self.scale**0.5)
-        k = self.mul(k, self.scale**0.5)
+        q = mint.mul(q, self.scale**0.5)
+        k = mint.mul(k, self.scale**0.5)
         attn = self.q_matmul_k(q, k)
 
         attn = ops.softmax(attn.astype(ms.float32), axis=-1).astype(attn.dtype)
         attn = self.attn_drop(attn)
 
         out = self.attn_matmul_v(attn, v)
-        out = self.transpose(out, (0, 2, 1, 3))
-        out = self.reshape(out, (b, n, c))
+        out = mint.permute(out, (0, 2, 1, 3))
+        out = mint.reshape(out, (b, n, c))
         out = self.proj(out)
         out = self.proj_drop(out)
 
@@ -192,8 +189,8 @@ class Block(nn.Cell):
         attn_drop: float = 0.,
         init_values: Optional[float] = None,
         drop_path: float = 0.,
-        act_layer: nn.Cell = nn.GELU,
-        norm_layer: nn.Cell = nn.LayerNorm,
+        act_layer: nn.Cell = mint.nn.GELU,
+        norm_layer: nn.Cell = mint.nn.LayerNorm,
         mlp_layer: Callable = Mlp,
     ):
         super(Block, self).__init__()
@@ -255,9 +252,9 @@ class VisionTransformer(nn.Cell):
         fc_norm: Optional[bool] = None,
         dynamic_img_size: bool = False,
         dynamic_img_pad: bool = False,
-        act_layer: nn.Cell = nn.GELU,
+        act_layer: nn.Cell = mint.nn.GELU,
         embed_layer: Callable = PatchEmbed,
-        norm_layer: nn.Cell = nn.LayerNorm,
+        norm_layer: nn.Cell = mint.nn.LayerNorm,
         mlp_layer: Callable = Mlp,
         class_token: bool = True,
         block_fn: Callable = Block,
@@ -295,7 +292,7 @@ class VisionTransformer(nn.Cell):
         self.cls_token = Parameter(initializer(TruncatedNormal(0.02), (1, 1, embed_dim))) if class_token else None
         embed_len = num_patches if no_embed_class else num_patches + self.num_prefix_tokens
         self.pos_embed = Parameter(initializer(TruncatedNormal(0.02), (1, embed_len, embed_dim)))
-        self.pos_drop = Dropout(pos_drop_rate)
+        self.pos_drop = mint.nn.Dropout(pos_drop_rate)
         if patch_drop_rate > 0:
             self.patch_drop = PatchDropout(
                 patch_drop_rate,
@@ -317,8 +314,8 @@ class VisionTransformer(nn.Cell):
 
         self.norm = norm_layer((embed_dim,)) if not use_fc_norm else nn.Identity()
         self.fc_norm = norm_layer((embed_dim,)) if use_fc_norm else nn.Identity()
-        self.head_drop = Dropout(drop_rate)
-        self.head = nn.Dense(embed_dim, num_classes) if num_classes > 0 else nn.Identity()
+        self.head_drop = mint.nn.Dropout(drop_rate)
+        self.head = mint.nn.Linear(embed_dim, num_classes) if num_classes > 0 else nn.Identity()
 
         if weight_init:
             self._init_weights()
@@ -333,7 +330,7 @@ class VisionTransformer(nn.Cell):
         w_value.init_data()
         w.set_data(w_value.reshape(w.shape))
         for _, cell in self.cells_and_names():
-            if isinstance(cell, nn.Dense):
+            if isinstance(cell, mint.nn.Linear):
                 cell.weight.set_data(
                     initializer(XavierUniform(), cell.weight.shape, cell.weight.dtype)
                 )
@@ -341,12 +338,12 @@ class VisionTransformer(nn.Cell):
                     cell.bias.set_data(
                         initializer('zeros', cell.bias.shape, cell.bias.dtype)
                     )
-            elif isinstance(cell, nn.LayerNorm):
-                cell.gamma.set_data(
-                    initializer('ones', cell.gamma.shape, cell.gamma.dtype)
+            elif isinstance(cell, mint.nn.LayerNorm):
+                cell.weight.set_data(
+                    initializer('ones', cell.weight.shape, cell.weight.dtype)
                 )
-                cell.beta.set_data(
-                    initializer('zeros', cell.beta.shape, cell.beta.dtype)
+                cell.bias.set_data(
+                    initializer('zeros', cell.bias.shape, cell.bias.dtype)
                 )
 
     def _pos_embed(self, x):
@@ -358,7 +355,7 @@ class VisionTransformer(nn.Cell):
                 (H, W),
                 num_prefix_tokens=0 if self.no_embed_class else self.num_prefix_tokens,
             )
-            x = ops.reshape(x, (B, -1, C))
+            x = mint.reshape(x, (B, -1, C))
         else:
             pos_embed = self.pos_embed
 
@@ -369,14 +366,14 @@ class VisionTransformer(nn.Cell):
             if self.cls_token is not None:
                 cls_tokens = ops.broadcast_to(self.cls_token, (x.shape[0], -1, -1))
                 cls_tokens = cls_tokens.astype(x.dtype)
-                x = ops.concat((cls_tokens, x), axis=1)
+                x = mint.concat((cls_tokens, x), dim=1)
         else:
             # original timm, JAX, and deit vit impl
             # pos_embed has entry for class token, concat then add
             if self.cls_token is not None:
                 cls_tokens = ops.broadcast_to(self.cls_token, (x.shape[0], -1, -1))
                 cls_tokens = cls_tokens.astype(x.dtype)
-                x = ops.concat((cls_tokens, x), axis=1)
+                x = mint.concat((cls_tokens, x), dim=1)
             x = x + pos_embed
 
         return self.pos_drop(x)

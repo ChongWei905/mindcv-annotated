@@ -7,10 +7,9 @@ import math
 from typing import Dict, List, Union
 
 import mindspore.common.initializer as init
-from mindspore import Tensor, nn
+from mindspore import Tensor, mint, nn
 
 from .helpers import load_pretrained
-from .layers.compatibility import Dropout
 from .registry import register_model
 
 __all__ = [
@@ -57,13 +56,13 @@ def _make_layers(
     layers = []
     for v in cfg:
         if v == "M":
-            layers += [nn.MaxPool2d(kernel_size=2, stride=2)]
+            layers += [mint.nn.MaxPool2d(kernel_size=2, stride=2)]
         else:
             conv2d = nn.Conv2d(in_channels, v, kernel_size=3, pad_mode="pad", padding=1)
             if batch_norm:
-                layers += [conv2d, nn.BatchNorm2d(v), nn.ReLU()]
+                layers += [conv2d, mint.nn.BatchNorm2d(v), mint.nn.ReLU()]
             else:
-                layers += [conv2d, nn.ReLU()]
+                layers += [conv2d, mint.nn.ReLU()]
             in_channels = v
 
     return nn.SequentialCell(layers)
@@ -94,13 +93,13 @@ class VGG(nn.Cell):
         self.features = _make_layers(cfg, batch_norm=batch_norm, in_channels=in_channels)
         self.flatten = nn.Flatten()
         self.classifier = nn.SequentialCell([
-            nn.Dense(512 * 7 * 7, 4096),
-            nn.ReLU(),
-            Dropout(p=drop_rate),
-            nn.Dense(4096, 4096),
-            nn.ReLU(),
-            Dropout(p=drop_rate),
-            nn.Dense(4096, num_classes),
+            mint.nn.Linear(512 * 7 * 7, 4096),
+            mint.nn.ReLU(),
+            mint.nn.Dropout(p=drop_rate),
+            mint.nn.Linear(4096, 4096),
+            mint.nn.ReLU(),
+            mint.nn.Dropout(p=drop_rate),
+            mint.nn.Linear(4096, num_classes),
         ])
         self._initialize_weights()
 
@@ -114,7 +113,7 @@ class VGG(nn.Cell):
                 if cell.bias is not None:
                     cell.bias.set_data(
                         init.initializer("zeros", cell.bias.shape, cell.bias.dtype))
-            elif isinstance(cell, nn.Dense):
+            elif isinstance(cell, mint.nn.Linear):
                 cell.weight.set_data(
                     init.initializer(init.Normal(0.01), cell.weight.shape, cell.weight.dtype))
                 if cell.bias is not None:

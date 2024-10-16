@@ -6,10 +6,9 @@ Refer to Searching for MobileNetV3.
 import math
 
 import mindspore.common.initializer as init
-from mindspore import Tensor, nn
+from mindspore import Tensor, mint, nn
 
 from .helpers import build_model_with_cfg, make_divisible
-from .layers.compatibility import Dropout
 from .layers.pooling import GlobalAvgPooling
 from .layers.squeeze_excite import SqueezeExcite
 from .registry import register_model
@@ -69,25 +68,25 @@ class Bottleneck(nn.Cell):
         if in_channels != mid_channels:
             layers.extend([
                 nn.Conv2d(in_channels, mid_channels, 1, 1, pad_mode="pad", padding=0, has_bias=False),
-                nn.BatchNorm2d(mid_channels),
+                mint.nn.BatchNorm2d(mid_channels),
                 self.activation(),
             ])
         # DepthWise.
         layers.extend([
             nn.Conv2d(mid_channels, mid_channels, kernel_size, stride,
                       pad_mode="same", group=mid_channels, has_bias=False),
-            nn.BatchNorm2d(mid_channels),
+            mint.nn.BatchNorm2d(mid_channels),
             self.activation(),
         ])
         # SqueezeExcitation.
         if use_se:
             layers.append(
-                SqueezeExcite(mid_channels, 1.0 / 4, act_layer=nn.ReLU, gate_layer=nn.HSigmoid)
+                SqueezeExcite(mid_channels, 1.0 / 4, act_layer=mint.nn.ReLU, gate_layer=mint.nn.Hardsigmoid)
             )
         # Project.
         layers.extend([
             nn.Conv2d(mid_channels, out_channels, 1, 1, pad_mode="pad", padding=0, has_bias=False),
-            nn.BatchNorm2d(out_channels),
+            mint.nn.BatchNorm2d(out_channels),
         ])
         self.layers = nn.SequentialCell(layers)
 
@@ -166,8 +165,8 @@ class MobileNetV3(nn.Cell):
         # Building stem conv layer.
         features = [
             nn.Conv2d(in_channels, input_channels, 3, 2, pad_mode="pad", padding=1, has_bias=False),
-            nn.BatchNorm2d(input_channels),
-            nn.HSwish(),
+            mint.nn.BatchNorm2d(input_channels),
+            mint.nn.Hardswish(),
         ]
 
         total_reduction = 2
@@ -189,8 +188,8 @@ class MobileNetV3(nn.Cell):
         output_channels = input_channels * 6
         features.extend([
             nn.Conv2d(input_channels, output_channels, 1, 1, pad_mode="pad", padding=0, has_bias=False),
-            nn.BatchNorm2d(output_channels),
-            nn.HSwish(),
+            mint.nn.BatchNorm2d(output_channels),
+            mint.nn.Hardswish(),
         ])
 
         self.feature_info.append(dict(chs=output_channels, reduction=total_reduction,
@@ -201,10 +200,10 @@ class MobileNetV3(nn.Cell):
 
         self.pool = GlobalAvgPooling()
         self.classifier = nn.SequentialCell([
-            nn.Dense(output_channels, last_channels),
-            nn.HSwish(),
-            Dropout(p=0.2),
-            nn.Dense(last_channels, num_classes),
+            mint.nn.Linear(output_channels, last_channels),
+            mint.nn.Hardswish(),
+            mint.nn.Dropout(p=0.2),
+            mint.nn.Linear(last_channels, num_classes),
         ])
         self._initialize_weights()
 
@@ -218,10 +217,10 @@ class MobileNetV3(nn.Cell):
                                      cell.weight.shape, cell.weight.dtype))
                 if cell.bias is not None:
                     cell.bias.set_data(init.initializer("zeros", cell.bias.shape, cell.bias.dtype))
-            elif isinstance(cell, nn.BatchNorm2d):
-                cell.gamma.set_data(init.initializer("ones", cell.gamma.shape, cell.gamma.dtype))
-                cell.beta.set_data(init.initializer("zeros", cell.beta.shape, cell.beta.dtype))
-            elif isinstance(cell, nn.Dense):
+            elif isinstance(cell, mint.nn.BatchNorm2d):
+                cell.running_var.set_data(init.initializer("ones", cell.running_var.shape, cell.running_var.dtype))
+                cell.running_mean.set_data(init.initializer("zeros", cell.running_mean.shape, cell.running_mean.dtype))
+            elif isinstance(cell, mint.nn.Linear):
                 cell.weight.set_data(
                     init.initializer(init.Normal(sigma=0.01, mean=0.0), cell.weight.shape, cell.weight.dtype))
                 if cell.bias is not None:

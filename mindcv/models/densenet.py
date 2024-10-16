@@ -8,10 +8,9 @@ from collections import OrderedDict
 from typing import Tuple
 
 import mindspore.common.initializer as init
-from mindspore import Tensor, nn, ops
+from mindspore import Tensor, mint, nn, ops
 
 from .helpers import load_pretrained
-from .layers.compatibility import Dropout
 from .layers.pooling import GlobalAvgPooling
 from .registry import register_model
 
@@ -53,16 +52,16 @@ class _DenseLayer(nn.Cell):
         drop_rate: float,
     ) -> None:
         super().__init__()
-        self.norm1 = nn.BatchNorm2d(num_input_features)
-        self.relu1 = nn.ReLU()
+        self.norm1 = mint.nn.BatchNorm2d(num_input_features)
+        self.relu1 = mint.nn.ReLU()
         self.conv1 = nn.Conv2d(num_input_features, bn_size * growth_rate, kernel_size=1, stride=1)
 
-        self.norm2 = nn.BatchNorm2d(bn_size * growth_rate)
-        self.relu2 = nn.ReLU()
+        self.norm2 = mint.nn.BatchNorm2d(bn_size * growth_rate)
+        self.relu2 = mint.nn.ReLU()
         self.conv2 = nn.Conv2d(bn_size * growth_rate, growth_rate, kernel_size=3, stride=1, pad_mode="pad", padding=1)
 
         self.drop_rate = drop_rate
-        self.dropout = Dropout(p=self.drop_rate)
+        self.dropout = mint.nn.Dropout(p=self.drop_rate)
 
     def construct(self, features: Tensor) -> Tensor:
         bottleneck = self.conv1(self.relu1(self.norm1(features)))
@@ -112,10 +111,10 @@ class _Transition(nn.Cell):
     ) -> None:
         super().__init__()
         self.features = nn.SequentialCell(OrderedDict([
-            ("norm", nn.BatchNorm2d(num_input_features)),
-            ("relu", nn.ReLU()),
+            ("norm", mint.nn.BatchNorm2d(num_input_features)),
+            ("relu", mint.nn.ReLU()),
             ("conv", nn.Conv2d(num_input_features, num_output_features, kernel_size=1, stride=1)),
-            ("pool", nn.AvgPool2d(kernel_size=2, stride=2))
+            ("pool", mint.nn.AvgPool2d(kernel_size=2, stride=2))
         ]))
 
     def construct(self, x: Tensor) -> Tensor:
@@ -153,12 +152,9 @@ class DenseNet(nn.Cell):
         # first Conv2d
         num_features = num_init_features
         layers["conv0"] = nn.Conv2d(in_channels, num_features, kernel_size=7, stride=2, pad_mode="pad", padding=3)
-        layers["norm0"] = nn.BatchNorm2d(num_features)
-        layers["relu0"] = nn.ReLU()
-        layers["pool0"] = nn.SequentialCell([
-            nn.Pad(paddings=((0, 0), (0, 0), (1, 1), (1, 1)), mode="CONSTANT"),
-            nn.MaxPool2d(kernel_size=3, stride=2),
-        ])
+        layers["norm0"] = mint.nn.BatchNorm2d(num_features)
+        layers["relu0"] = mint.nn.ReLU()
+        layers["pool0"] = mint.nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
 
         # DenseBlock
         for i, num_layers in enumerate(block_config):
@@ -177,13 +173,13 @@ class DenseNet(nn.Cell):
                 num_features = num_features // 2
 
         # final bn+ReLU
-        layers["norm5"] = nn.BatchNorm2d(num_features)
-        layers["relu5"] = nn.ReLU()
+        layers["norm5"] = mint.nn.BatchNorm2d(num_features)
+        layers["relu5"] = mint.nn.ReLU()
 
         self.num_features = num_features
         self.features = nn.SequentialCell(layers)
         self.pool = GlobalAvgPooling()
-        self.classifier = nn.Dense(self.num_features, num_classes)
+        self.classifier = mint.nn.Linear(self.num_features, num_classes)
         self._initialize_weights()
 
     def _initialize_weights(self) -> None:
@@ -197,10 +193,10 @@ class DenseNet(nn.Cell):
                     cell.bias.set_data(
                         init.initializer(init.HeUniform(math.sqrt(5), mode="fan_in", nonlinearity="leaky_relu"),
                                          cell.bias.shape, cell.bias.dtype))
-            elif isinstance(cell, nn.BatchNorm2d):
-                cell.gamma.set_data(init.initializer("ones", cell.gamma.shape, cell.gamma.dtype))
-                cell.beta.set_data(init.initializer("zeros", cell.beta.shape, cell.beta.dtype))
-            elif isinstance(cell, nn.Dense):
+            elif isinstance(cell, mint.nn.BatchNorm2d):
+                cell.running_var.set_data(init.initializer("ones", cell.running_var.shape, cell.running_var.dtype))
+                cell.running_mean.set_data(init.initializer("zeros", cell.running_mean.shape, cell.running_mean.dtype))
+            elif isinstance(cell, mint.nn.Linear):
                 cell.weight.set_data(
                     init.initializer(init.HeUniform(math.sqrt(5), mode="fan_in", nonlinearity="leaky_relu"),
                                      cell.weight.shape, cell.weight.dtype))

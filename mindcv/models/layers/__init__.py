@@ -12,8 +12,10 @@ from . import (
     squeeze_excite,
 )
 from .activation import *
+from .compatibility import *
 from .conv_norm_act import *
 from .drop_path import *
+from .extend_bmm import *
 from .format import *
 from .identity import *
 from .patch_dropout import *
