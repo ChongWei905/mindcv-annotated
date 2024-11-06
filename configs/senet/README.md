@@ -2,6 +2,11 @@
 
 > [Squeeze-and-Excitation Networks](https://arxiv.org/abs/1709.01507)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 In this work, the authors focus instead on the channel relationship and propose a novel architectural unit, which the
@@ -27,9 +32,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-|   model    | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                         | download                                                                                              |
-| :--------: | :-------: | :-------: | :--------: | ---------- | ----- | ------- | --------- | ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| seresnet18 |   72.05   |   90.59   |   11.80    | 64         | 8     | 51.09   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/senet/seresnet18_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/senet/seresnet18-7b971c78-910v2.ckpt) |
+
+| model name | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                         | download                                                                                              |
+| :--------: | :-------: | :-------: | :--------: | ---------- | ----- | ------------- | ------- | --------- | ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| seresnet18 |   72.05   |   90.59   |   11.80    | 64         | 8     | 1~3 mins      | 51.09   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/senet/seresnet18_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/senet/seresnet18-7b971c78-910v2.ckpt) |
 
 </div>
 
@@ -38,9 +44,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-|   model    | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                         | download                                                                                |
-| :--------: | :-------: | :-------: | :--------: | ---------- | ----- | ------- | --------- | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| seresnet18 |   71.81   |   90.49   |   11.80    | 64         | 8     | 44.40   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/senet/seresnet18_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/senet/seresnet18-7880643b.ckpt) |
+
+| model name | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                         | download                                                                                |
+| :--------: | :-------: | :-------: | :--------: | ---------- | ----- | ------------- | ------- | --------- | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| seresnet18 |   71.81   |   90.49   |   11.80    | 64         | 8     | 1~3 mins      | 44.40   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/senet/seresnet18_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/senet/seresnet18-7880643b.ckpt) |
 
 </div>
 

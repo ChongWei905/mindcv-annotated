@@ -2,6 +2,11 @@
 
 > [RepMLPNet: Hierarchical Vision MLP with Re-parameterized Locality](https://arxiv.org/abs/2112.11081)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 Compared to convolutional layers, fully-connected (FC) layers are better at modeling the long-range dependencies
@@ -37,9 +42,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-|    model    | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                           | download                                                                                  |
-| :---------: | :-------: | :-------: | :--------: | ---------- | ----- | ------- | --------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
-| repmlp_t224 |   76.71   |   93.30   |   38.30    | 128        | 8     | 578.23  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/repmlp/repmlp_t224_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/repmlp/repmlp_t224-8dbedd00.ckpt) |
+
+| model name  | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                           | download                                                                                  |
+| :---------: | :-------: | :-------: | :--------: | ---------- | ----- |---------------| ------- | --------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| repmlp_t224 |   76.71   |   93.30   |   38.30    | 128        | 8     | 8~10 mins     | 578.23  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/repmlp/repmlp_t224_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/repmlp/repmlp_t224-8dbedd00.ckpt) |
 
 </div>
 

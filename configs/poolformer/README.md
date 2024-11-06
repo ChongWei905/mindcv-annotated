@@ -2,6 +2,11 @@
 
 > [MetaFormer Is Actually What You Need for Vision](https://arxiv.org/abs/2111.11418)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 Instead of designing complicated token mixer to achieve SOTA performance, the target of this work is to demonstrate the competence of Transformer models largely stem from the general architecture MetaFormer. Pooling/PoolFormer are just the tools to support the authors' claim.
@@ -21,9 +26,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-|     model      | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                                  | download                                                                                                       |
-| :------------: | :-------: | :-------: | :--------: | ---------- | ----- | ------- | --------- | ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| poolformer_s12 |   77.49   |   93.55   |   11.92    | 128        | 8     | 211.81  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/poolformer/poolformer_s12_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/poolformer/poolformer_s12-c7e14eea-910v2.ckpt) |
+
+|   model name   | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                                  | download                                                                                                       |
+| :------------: | :-------: | :-------: | :--------: | ---------- | ----- |---------------| ------- | --------- | ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| poolformer_s12 |   77.49   |   93.55   |   11.92    | 128        | 8     | 3~5 mins      | 211.81  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/poolformer/poolformer_s12_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/poolformer/poolformer_s12-c7e14eea-910v2.ckpt) |
 
 </div>
 
@@ -32,9 +38,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-|     model      | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                                  | download                                                                                         |
-| :------------: | :-------: | :-------: | :--------: | ---------- | ----- | ------- | --------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| poolformer_s12 |   77.33   |   93.34   |   11.92    | 128        | 8     | 220.13  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/poolformer/poolformer_s12_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/poolformer/poolformer_s12-5be5c4e4.ckpt) |
+
+|   model name   | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                                  | download                                                                                         |
+| :------------: | :-------: | :-------: | :--------: | ---------- | ----- |---------------| ------- | --------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| poolformer_s12 |   77.33   |   93.34   |   11.92    | 128        | 8     | 3~5 mins      | 220.13  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/poolformer/poolformer_s12_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/poolformer/poolformer_s12-5be5c4e4.ckpt) |
 
 </div>
 

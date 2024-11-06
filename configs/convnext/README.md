@@ -1,6 +1,11 @@
 # ConvNeXt
 > [A ConvNet for the 2020s](https://arxiv.org/abs/2201.03545)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 In this work, the authors reexamine the design spaces and test the limits of what a pure ConvNet can achieve.
@@ -26,9 +31,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model         | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                               | download                                                                                                    |
-| ------------- | --------- | --------- | ---------- | ---------- | ----- |---------| --------- | ---------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| convnext_tiny | 81.28     | 95.61     | 28.59      | 16         | 8     | 48.7    | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/convnext/convnext_tiny_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/convnext/convnext_tiny-db11dc82-910v2.ckpt) |
+
+| model name    | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                               | download                                                                                                    |
+| ------------- | --------- | --------- | ---------- | ---------- | ----- | ------------- | ------- | --------- | ---------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| convnext_tiny | 81.28     | 95.61     | 28.59      | 16         | 8     | 2~4 mins      | 48.7    | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/convnext/convnext_tiny_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/convnext/convnext_tiny-db11dc82-910v2.ckpt) |
 
 
 </div>
@@ -38,9 +44,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model         | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                               | download                                                                                      |
-| ------------- | --------- | --------- | ---------- | ---------- | ----- |---------| --------- | ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| convnext_tiny | 81.91     | 95.79     | 28.59      | 16         | 8     | 66.79   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/convnext/convnext_tiny_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/convnext/convnext_tiny-ae5ff8d7.ckpt) |
+
+| model name    | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                               | download                                                                                      |
+| ------------- | --------- | --------- | ---------- | ---------- | ----- |---------------| ------- | --------- | ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| convnext_tiny | 81.91     | 95.79     | 28.59      | 16         | 8     | 2~4 mins      | 66.79   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/convnext/convnext_tiny_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/convnext/convnext_tiny-ae5ff8d7.ckpt) |
 
 
 </div>

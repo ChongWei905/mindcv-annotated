@@ -2,6 +2,11 @@
 
 > [Aggregated Residual Transformations for Deep Neural Networks](https://arxiv.org/abs/1611.05431)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 The authors present a simple, highly modularized network architecture for image classification. The network is
@@ -28,9 +33,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-|      model      | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                                | download                                                                                                     |
-| :-------------: | :-------: | :-------: | :--------: | ---------- | ----- | ------- | --------- | ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| resnext50_32x4d |   78.64   |   94.18   |   25.10    | 32         | 8     | 44.61   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/resnext/resnext50_32x4d_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/resnext/resnext50_32x4d-988f75bc-910v2.ckpt) |
+
+|   model name    | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                                | download                                                                                                     |
+| :-------------: | :-------: | :-------: | :--------: | ---------- | ----- | ------------- | ------- | --------- | ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| resnext50_32x4d |   78.64   |   94.18   |   25.10    | 32         | 8     | 1~3 mins      | 44.61   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/resnext/resnext50_32x4d_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/resnext/resnext50_32x4d-988f75bc-910v2.ckpt) |
 
 </div>
 
@@ -39,9 +45,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-|      model      | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                                | download                                                                                       |
-| :-------------: | :-------: | :-------: | :--------: | ---------- | ----- | ------- | --------- | ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| resnext50_32x4d |   78.53   |   94.10   |   25.10    | 32         | 8     | 37.22   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/resnext/resnext50_32x4d_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/resnext/resnext50_32x4d-af8aba16.ckpt) |
+
+|   model name    | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                                | download                                                                                       |
+| :-------------: | :-------: | :-------: | :--------: | ---------- | ----- | ------------- | ------- | --------- | ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| resnext50_32x4d |   78.53   |   94.10   |   25.10    | 32         | 8     | 1~3 mins      | 37.22   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/resnext/resnext50_32x4d_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/resnext/resnext50_32x4d-af8aba16.ckpt) |
 
 </div>
 

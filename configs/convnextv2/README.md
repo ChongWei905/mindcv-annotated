@@ -1,6 +1,11 @@
 # ConvNeXt V2
 > [ConvNeXt V2: Co-designing and Scaling ConvNets with Masked Autoencoders](https://arxiv.org/abs/2301.00808)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 In this paper, the authors propose a fully convolutional masked autoencoder framework and a new Global Response
@@ -24,9 +29,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 
 <div align="center">
 
-| model           | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                                   | download                                                                                                        |
-| --------------- | --------- | --------- | ---------- | ---------- | ----- | ------- | --------- | -------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| convnextv2_tiny | 82.39     | 95.95     | 28.64      | 128        | 8     | 257.2   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/convnextv2/convnextv2_tiny_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/convnextv2/convnextv2_tiny-a35b79ce-910v2.ckpt) |
+
+| model name      | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                                   | download                                                                                                        |
+| --------------- | --------- | --------- | ---------- | ---------- | ----- | ------------- | ------- | --------- | -------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| convnextv2_tiny | 82.39     | 95.95     | 28.64      | 128        | 8     | 4~6 mins      | 257.2   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/convnextv2/convnextv2_tiny_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/convnextv2/convnextv2_tiny-a35b79ce-910v2.ckpt) |
 
 </div>
 
@@ -35,9 +41,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model           | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                                   | download                                                                                          |
-| --------------- | --------- | --------- | ---------- | ---------- | ----- | ------- | --------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| convnextv2_tiny | 82.43     | 95.98     | 28.64      | 128        | 8     | 400.20  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/convnextv2/convnextv2_tiny_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/convnextv2/convnextv2_tiny-d441ba2c.ckpt) |
+
+| model name      | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                                   | download                                                                                          |
+| --------------- | --------- | --------- | ---------- | ---------- | ----- | ------------- | ------- | --------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| convnextv2_tiny | 82.43     | 95.98     | 28.64      | 128        | 8     | 4~6 mins      | 400.20  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/convnextv2/convnextv2_tiny_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/convnextv2/convnextv2_tiny-d441ba2c.ckpt) |
 
 </div>
 

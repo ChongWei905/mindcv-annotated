@@ -2,6 +2,11 @@
 
 > [Scaling Local Self-Attention for Parameter Efficient Visual Backbones](https://arxiv.org/abs/2103.12731)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 Researchers from Google Research and UC Berkeley have developed a new model of self-attention that can outperform standard baseline models and even high-performance convolutional models.[[1](#references)]
@@ -38,9 +43,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model       | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                            | download                                                                                   |
-| ----------- | --------- | --------- | ---------- | ---------- | ----- | ------- | --------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| halonet_50t | 79.53     | 94.79     | 22.79      | 64         | 8     | 421.66  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/halonet/halonet_50t_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/halonet/halonet_50t-533da6be.ckpt) |
+
+| model name  | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                            | download                                                                                   |
+| ----------- | --------- | --------- | ---------- | ---------- | ----- |---------------| ------- | --------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| halonet_50t | 79.53     | 94.79     | 22.79      | 64         | 8     | 6~8 mins      | 421.66  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/halonet/halonet_50t_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/halonet/halonet_50t-533da6be.ckpt) |
 
 </div>
 

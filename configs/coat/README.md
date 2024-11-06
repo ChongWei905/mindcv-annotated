@@ -2,6 +2,11 @@
 
 > [Co-Scale Conv-Attentional Image Transformers](https://arxiv.org/abs/2104.06399v2)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ##  Introduction
 
 Co-Scale Conv-Attentional Image Transformer (CoaT) is a Transformer-based image classifier equipped with co-scale and conv-attentional mechanisms. First, the co-scale mechanism maintains the integrity of Transformers' encoder branches at individual scales, while allowing representations learned at different scales to effectively communicate with each other. Second, the conv-attentional mechanism is designed by realizing a relative position embedding formulation in the factorized attention module with an efficient convolution-like implementation. CoaT empowers image Transformers with enriched multi-scale and contextual modeling capabilities.
@@ -20,9 +25,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model     | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                       | Weight                                                                                |
-| --------- | --------- | --------- | ---------- | ---------- | ----- |---------| --------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| coat_tiny | 79.67     | 94.88     | 5.50       | 32         | 8     | 254.95  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/coat/coat_tiny_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/coat/coat_tiny-071cb792.ckpt) |
+
+| model name | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                       | Weight                                                                                |
+| ---------- | --------- | --------- | ---------- | ---------- | ----- | ------------- | ------- | --------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| coat_tiny  | 79.67     | 94.88     | 5.50       | 32         | 8     | 9~12 mins     | 254.95  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/coat/coat_tiny_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/coat/coat_tiny-071cb792.ckpt) |
 
 </div>
 

@@ -2,6 +2,11 @@
 
 > [Pyramid Vision Transformer: A Versatile Backbone for Dense Prediction without Convolutions](https://arxiv.org/abs/2102.12122)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 PVT is a general backbone network for dense prediction without convolution operation. PVT introduces a pyramid structure
@@ -21,9 +26,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-|  model   | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                     | download                                                                                          |
-| :------: | :-------: | :-------: | :--------: | ---------- | ----- | ------- | --------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
-| pvt_tiny |   74.88   |   92.12   |   13.23    | 128        | 8     | 237.5   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/pvt/pvt_tiny_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/pvt/pvt_tiny-6676051f-910v2.ckpt) |
+
+| model name | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                     | download                                                                                          |
+| :--------: | :-------: | :-------: | :--------: | ---------- | ----- | ------------- | ------- | --------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
+|  pvt_tiny  |   74.88   |   92.12   |   13.23    | 128        | 8     | 3~5 mins      | 237.5   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/pvt/pvt_tiny_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/pvt/pvt_tiny-6676051f-910v2.ckpt) |
 
 </div>
 
@@ -32,9 +38,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-|  model   | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                     | download                                                                            |
-| :------: | :-------: | :-------: | :--------: | ---------- | ----- | ------- | --------- | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------- |
-| pvt_tiny |   74.81   |   92.18   |   13.23    | 128        | 8     | 229.63  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/pvt/pvt_tiny_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/pvt/pvt_tiny-6abb953d.ckpt) |
+
+| model name | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                     | download                                                                            |
+| :--------: | :-------: | :-------: | :--------: | ---------- | ----- | ------------- | ------- | --------- | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------- |
+|  pvt_tiny  |   74.81   |   92.18   |   13.23    | 128        | 8     | 3~5 mins      | 229.63  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/pvt/pvt_tiny_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/pvt/pvt_tiny-6abb953d.ckpt) |
 
 </div>
 

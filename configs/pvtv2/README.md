@@ -2,6 +2,11 @@
 
 > [PVT v2: Improved Baselines with Pyramid Vision Transformer](https://arxiv.org/abs/2106.13797)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 In this work, the authors present new baselines by improving the original Pyramid Vision Transformer (PVT v1) by adding
@@ -26,9 +31,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-|   model   | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                        | download                                                                                              |
-| :-------: | :-------: | :-------: | :--------: | ---------- | ----- | ------- | --------- | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| pvt_v2_b0 |   71.25   |   90.50   |    3.67    | 128        | 8     | 255.76  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/pvtv2/pvt_v2_b0_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/pvt_v2/pvt_v2_b0-d9cd9d6a-910v2.ckpt) |
+
+| model name | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                        | download                                                                                              |
+| :--------: | :-------: | :-------: | :--------: | ---------- | ----- | ------------- | ------- | --------- | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| pvt_v2_b0  |   71.25   |   90.50   |    3.67    | 128        | 8     | 4~6 mins      | 255.76  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/pvtv2/pvt_v2_b0_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/pvt_v2/pvt_v2_b0-d9cd9d6a-910v2.ckpt) |
 
 </div>
 
@@ -37,9 +43,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-|   model   | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                        | download                                                                                |
-| :-------: | :-------: | :-------: | :--------: | ---------- | ----- | ------- | --------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| pvt_v2_b0 |   71.50   |   90.60   |    3.67    | 128        | 8     | 269.38  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/pvtv2/pvt_v2_b0_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/pvt_v2/pvt_v2_b0-1c4f6683.ckpt) |
+
+| model name | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                        | download                                                                                |
+| :--------: | :-------: | :-------: | :--------: | ---------- | ----- | ------------- | ------- | --------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| pvt_v2_b0  |   71.50   |   90.60   |    3.67    | 128        | 8     | 4~6 mins      | 269.38  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/pvtv2/pvt_v2_b0_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/pvt_v2/pvt_v2_b0-1c4f6683.ckpt) |
 
 </div>
 

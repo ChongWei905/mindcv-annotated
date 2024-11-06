@@ -1,6 +1,11 @@
 # GoogLeNet
 > [GoogLeNet: Going Deeper with Convolutions](https://arxiv.org/abs/1409.4842)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 GoogLeNet is a new deep learning structure proposed by Christian Szegedy in 2014. Prior to this, AlexNet, VGG and other
@@ -27,9 +32,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model     | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                            | download                                                                                                 |
-| --------- | --------- | --------- | ---------- | ---------- | ----- | ------- | --------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| googlenet | 72.89     | 90.89     | 6.99       | 32         | 8     | 23.5    | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/googlenet/googlenet_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/googlenet/googlenet-de74c31d-910v2.ckpt) |
+
+| model name | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                            | download                                                                                                 |
+| ---------- | --------- | --------- | ---------- | ---------- | ----- | ------------- | ------- | --------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| googlenet  | 72.89     | 90.89     | 6.99       | 32         | 8     | 1~3 mins      | 23.5    | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/googlenet/googlenet_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/googlenet/googlenet-de74c31d-910v2.ckpt) |
 
 </div>
 
@@ -38,9 +44,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model     | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                            | download                                                                                   |
-| --------- | --------- | --------- | ---------- | ---------- | ----- | ------- | --------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| googlenet | 72.68     | 90.89     | 6.99       | 32         | 8     | 21.40   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/googlenet/googlenet_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/googlenet/googlenet-5552fcd3.ckpt) |
+
+| model name | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                            | download                                                                                   |
+| ---------- | --------- | --------- | ---------- | ---------- | ----- | ------------- | ------- | --------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| googlenet  | 72.68     | 90.89     | 6.99       | 32         | 8     | 1~3 mins      | 21.40   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/googlenet/googlenet_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/googlenet/googlenet-5552fcd3.ckpt) |
 
 </div>
 

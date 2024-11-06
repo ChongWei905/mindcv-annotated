@@ -2,6 +2,11 @@
 
 > [EdgeNeXt: Efficiently Amalgamated CNN-Transformer Architecture for Mobile Vision Applications](https://arxiv.org/abs/2206.10589)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 EdgeNeXt effectively combines the strengths of both CNN and Transformer models and is a
@@ -26,9 +31,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model             | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                                   | download                                                                                                        |
-| ----------------- | --------- | --------- | ---------- | ---------- | ----- | ------- | --------- | -------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| edgenext_xx_small | 70.64     | 89.75     | 1.33       | 256        | 8     | 239.38  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/edgenext/edgenext_xx_small_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/edgenext/edgenext_xx_small-cad13d2c-910v2.ckpt) |
+
+| model name        | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                                   | download                                                                                                        |
+| ----------------- | --------- | --------- | ---------- | ---------- | ----- | ------------- | ------- | --------- | -------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| edgenext_xx_small | 70.64     | 89.75     | 1.33       | 256        | 8     | 5~8 mins      | 239.38  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/edgenext/edgenext_xx_small_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/edgenext/edgenext_xx_small-cad13d2c-910v2.ckpt) |
 
 
 </div>
@@ -38,9 +44,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model             | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                                   | download                                                                                          |
-| ----------------- | --------- | --------- | ---------- | ---------- | ----- | ------- | --------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| edgenext_xx_small | 71.02     | 89.99     | 1.33       | 256        | 8     | 191.24  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/edgenext/edgenext_xx_small_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/edgenext/edgenext_xx_small-afc971fb.ckpt) |
+
+| model name        | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                                   | download                                                                                          |
+| ----------------- | --------- | --------- | ---------- | ---------- | ----- | ------------- | ------- | --------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| edgenext_xx_small | 71.02     | 89.99     | 1.33       | 256        | 8     | 5~8 mins      | 191.24  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/edgenext/edgenext_xx_small_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/edgenext/edgenext_xx_small-afc971fb.ckpt) |
 
 
 </div>

@@ -1,6 +1,11 @@
 # MnasNet
 > [MnasNet: Platform-Aware Neural Architecture Search for Mobile](https://arxiv.org/abs/1807.11626)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 Designing convolutional neural networks (CNN) for mobile devices is challenging because mobile models need to be small and fast, yet still accurate. Although significant efforts have been dedicated to design and improve mobile CNNs on all dimensions, it is very difficult to manually balance these trade-offs when there are so many architectural possibilities to consider. In this paper, the authors propose an automated mobile neural architecture search (MNAS) approach, which explicitly incorporate model latency into the main objective so that the search can identify a model that achieves a good trade-off between accuracy and latency. Unlike previous work, where latency is considered via another, often inaccurate proxy (e.g., FLOPS), our approach directly measures real-world inference latency by executing the model on mobile phones. To further strike the right balance between flexibility and search space size, the authors propose a novel factorized hierarchical search space that encourages layer diversity throughout the network.[[1](#references)]
@@ -21,9 +26,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model       | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                             | download                                                                                                 |
-| ----------- | --------- | --------- | ---------- | ---------- | ----- | ------- | --------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| mnasnet_075 | 71.77     | 90.52     | 3.20       | 256        | 8     | 175.85  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/mnasnet/mnasnet_0.75_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/mnasnet/mnasnet_075-083b2bc4-910v2.ckpt) |
+
+| model name  | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                             | download                                                                                                 |
+| ----------- | --------- | --------- | ---------- | ---------- | ----- | ------------- | ------- | --------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| mnasnet_075 | 71.77     | 90.52     | 3.20       | 256        | 8     | 2~4 mins      | 175.85  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/mnasnet/mnasnet_0.75_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/mnasnet/mnasnet_075-083b2bc4-910v2.ckpt) |
 
 
 </div>
@@ -33,9 +39,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model       | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                             | download                                                                                   |
-| ----------- | --------- | --------- | ---------- | ---------- | ----- | ------- | --------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| mnasnet_075 | 71.81     | 90.53     | 3.20       | 256        | 8     | 165.43  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/mnasnet/mnasnet_0.75_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/mnasnet/mnasnet_075-465d366d.ckpt) |
+
+| model name  | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                             | download                                                                                   |
+| ----------- | --------- | --------- | ---------- | ---------- | ----- | ------------- | ------- | --------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| mnasnet_075 | 71.81     | 90.53     | 3.20       | 256        | 8     | 2~4 mins      | 165.43  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/mnasnet/mnasnet_0.75_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/mnasnet/mnasnet_075-465d366d.ckpt) |
 
 
 </div>

@@ -1,6 +1,11 @@
 # MobileNetV2
 > [MobileNetV2: Inverted Residuals and Linear Bottlenecks](https://arxiv.org/abs/1801.04381)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 The model is a new neural network architecture that is specifically tailored for mobile and resource-constrained environments. This network pushes the state of the art for mobile custom computer vision models, significantly reducing the amount of operations and memory required while maintaining the same accuracy.
@@ -23,9 +28,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model            | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                                      | download                                                                                                                    |
-| ---------------- | --------- | --------- | ---------- | ---------- | ----- | ------- | --------- | ----------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| mobilenet_v2_075 | 69.73     | 89.35     | 2.66       | 256        | 8     | 174.65  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/mobilenetv2/mobilenet_v2_0.75_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/mobilenet/mobilenetv2/mobilenet_v2_075-755932c4-910v2.ckpt) |
+
+| model name       | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                                      | download                                                                                                                    |
+| ---------------- | --------- | --------- | ---------- | ---------- | ----- | ------------- | ------- | --------- | ----------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| mobilenet_v2_075 | 69.73     | 89.35     | 2.66       | 256        | 8     | 2~4 mins      | 174.65  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/mobilenetv2/mobilenet_v2_0.75_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/mobilenet/mobilenetv2/mobilenet_v2_075-755932c4-910v2.ckpt) |
 
 
 </div>
@@ -35,9 +41,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model            | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                                      | download                                                                                                      |
-| ---------------- | --------- | --------- | ---------- | ---------- | ----- | ------- | --------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| mobilenet_v2_075 | 69.98     | 89.32     | 2.66       | 256        | 8     | 155.94  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/mobilenetv2/mobilenet_v2_0.75_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/mobilenet/mobilenetv2/mobilenet_v2_075-bd7bd4c4.ckpt) |
+
+| model name       | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                                      | download                                                                                                      |
+| ---------------- | --------- | --------- | ---------- | ---------- | ----- | ------------- | ------- | --------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| mobilenet_v2_075 | 69.98     | 89.32     | 2.66       | 256        | 8     | 2~4 mins      | 155.94  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/mobilenetv2/mobilenet_v2_0.75_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/mobilenet/mobilenetv2/mobilenet_v2_075-bd7bd4c4.ckpt) |
 
 
 </div>

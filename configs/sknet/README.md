@@ -2,6 +2,11 @@
 
 > [Selective Kernel Networks](https://arxiv.org/pdf/1903.06586)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 The local receptive fields (RFs) of neurons in the primary visual cortex (V1) of cats [[1](#references)] have inspired
@@ -31,9 +36,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-|   model    | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                         | download                                                                                              |
-| :--------: | :-------: | :-------: | :--------: | ---------- | ----- | ------- | --------- | ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| skresnet18 |   72.85   |   90.83   |   11.97    | 64         | 8     | 49.83   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/sknet/skresnet18_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/sknet/skresnet18-9d8b1afc-910v2.ckpt) |
+
+| model name | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                         | download                                                                                              |
+| :--------: | :-------: | :-------: | :--------: | ---------- | ----- | ------------- | ------- | --------- | ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| skresnet18 |   72.85   |   90.83   |   11.97    | 64         | 8     | 1~3 mins      | 49.83   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/sknet/skresnet18_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/sknet/skresnet18-9d8b1afc-910v2.ckpt) |
 
 </div>
 
@@ -42,9 +48,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-|   model    | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                         | download                                                                                |
-| :--------: | :-------: | :-------: | :--------: | ---------- | ----- | ------- | --------- | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| skresnet18 |   73.09   |   91.20   |   11.97    | 64         | 8     | 45.84   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/sknet/skresnet18_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/sknet/skresnet18-868228e5.ckpt) |
+
+| model name | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                         | download                                                                                |
+| :--------: | :-------: | :-------: | :--------: | ---------- | ----- | ------------- | ------- | --------- | ---------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| skresnet18 |   73.09   |   91.20   |   11.97    | 64         | 8     | 1~3 mins      | 45.84   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/sknet/skresnet18_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/sknet/skresnet18-868228e5.ckpt) |
 
 </div>
 

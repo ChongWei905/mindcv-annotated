@@ -2,6 +2,11 @@
 
 > [ReXNet: Rethinking Channel Dimensions for Efficient Model Design](https://arxiv.org/abs/2007.00992)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 ReXNets is a new model achieved based on parameterization. It utilizes a new search method for a channel configuration
@@ -19,9 +24,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-|   model   | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                          | download                                                                                              |
-| :-------: | :-------: | :-------: | :--------: | ---------- | ----- | ------- | --------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| rexnet_09 |   76.14   |   92.96   |    4.13    | 64         | 8     | 115.61  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/rexnet/rexnet_x09_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/rexnet/rexnet_09-00223eb4-910v2.ckpt) |
+
+| model name | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                          | download                                                                                              |
+| :--------: | :-------: | :-------: | :--------: | ---------- | ----- | ------------- | ------- | --------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| rexnet_09  |   76.14   |   92.96   |    4.13    | 64         | 8     | 7~10 mins     | 115.61  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/rexnet/rexnet_x09_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/rexnet/rexnet_09-00223eb4-910v2.ckpt) |
 
 </div>
 
@@ -30,9 +36,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-|   model   | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                          | download                                                                                |
-| :-------: | :-------: | :-------: | :--------: | ---------- | ----- | ------- | --------- | ----------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| rexnet_09 |   77.06   |   93.41   |    4.13    | 64         | 8     | 130.10  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/rexnet/rexnet_x09_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/rexnet/rexnet_09-da498331.ckpt) |
+
+| model name | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                          | download                                                                                |
+| :--------: | :-------: | :-------: | :--------: | ---------- | ----- | ------------- | ------- | --------- | ----------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| rexnet_09  |   77.06   |   93.41   |    4.13    | 64         | 8     | 7~10 mins     | 130.10  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/rexnet/rexnet_x09_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/rexnet/rexnet_09-da498331.ckpt) |
 
 </div>
 

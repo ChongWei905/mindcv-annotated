@@ -1,6 +1,11 @@
 # ConViT
 > [ConViT: Improving Vision Transformers with Soft Convolutional Inductive Biases](https://arxiv.org/abs/2103.10697)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 ConViT combines the strengths of convolutional architectures and Vision Transformers (ViTs).
@@ -30,9 +35,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model       | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                           | download                                                                                                |
-| ----------- | --------- | --------- | ---------- | ---------- | ----- | ------- | --------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- |
-| convit_tiny | 73.79     | 91.70     | 5.71       | 256        | 8     | 226.51  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/convit/convit_tiny_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/convit/convit_tiny-1961717e-910v2.ckpt) |
+
+| model name  | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                           | download                                                                                                |
+| ----------- | --------- | --------- | ---------- | ---------- | ----- | ------------- | ------- | --------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- |
+| convit_tiny | 73.79     | 91.70     | 5.71       | 256        | 8     | 2~4 mins      | 226.51  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/convit/convit_tiny_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/convit/convit_tiny-1961717e-910v2.ckpt) |
 
 </div>
 
@@ -41,9 +47,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model       | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                           | download                                                                                  |
-| ----------- | --------- | --------- | ---------- | ---------- | ----- | ------- | --------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
-| convit_tiny | 73.66     | 91.72     | 5.71       | 256        | 8     | 231.62  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/convit/convit_tiny_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/convit/convit_tiny-e31023f2.ckpt) |
+
+| model name  | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                           | download                                                                                  |
+| ----------- | --------- | --------- | ---------- | ---------- | ----- | ------------- | ------- | --------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| convit_tiny | 73.66     | 91.72     | 5.71       | 256        | 8     | 2~4 mins      | 231.62  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/convit/convit_tiny_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/convit/convit_tiny-e31023f2.ckpt) |
 
 </div>
 

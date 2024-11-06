@@ -1,6 +1,11 @@
 # GhostNet
 > [GhostNet: More Features from Cheap Operations](https://arxiv.org/abs/1911.11907)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 The redundancy in feature maps is an important characteristic of those successful CNNs, but has rarely been
@@ -34,9 +39,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model        | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                              | download                                                                                     |
-| ------------ | --------- | --------- | ---------- | ---------- | ----- | ------- | --------- | --------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| ghostnet_050 | 66.03     | 86.64     | 2.60       | 128        | 8     | 211.13  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/ghostnet/ghostnet_050_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/ghostnet/ghostnet_050-85b91860.ckpt) |
+
+| model name   | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                              | download                                                                                     |
+| ------------ | --------- | --------- | ---------- | ---------- | ----- | ------------- | ------- | --------- | --------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| ghostnet_050 | 66.03     | 86.64     | 2.60       | 128        | 8     | 6~8 mins      | 211.13  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/ghostnet/ghostnet_050_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/ghostnet/ghostnet_050-85b91860.ckpt) |
 
 
 </div>

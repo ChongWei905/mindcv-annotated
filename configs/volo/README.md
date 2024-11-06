@@ -2,6 +2,11 @@
 
 > [VOLO: Vision Outlooker for Visual Recognition ](https://arxiv.org/abs/2106.13112)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 Vision Outlooker (VOLO), a novel outlook attention, presents a simple and general architecture. Unlike self-attention
@@ -31,9 +36,10 @@ performance tested on ascend 910(8p) with graph mode
 
 <div align="center">
 
-|  model  | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                                 | download                                                                                                      |
-| :-----: | :-------: | :-------: | :--------: | ---------- | ----- | ------- | --------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
-| volo_d1 |   82.59   |   95.99   |     27     | 128        | 8     | 270.79  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/visformer/visformer_tiny_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/visformer/visformer_tiny-df995ba4-910v2.ckpt) |
+
+| model name | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                                 | download                                                                                                      |
+| :--------: | :-------: | :-------: | :--------: | ---------- | ----- | ------------- | ------- | --------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
+|  volo_d1   |   82.59   |   95.99   |     27     | 128        | 8     | 3~5 mins      | 270.79  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/visformer/visformer_tiny_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/visformer/visformer_tiny-df995ba4-910v2.ckpt) |
 
 </div>
 

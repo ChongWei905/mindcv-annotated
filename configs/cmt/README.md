@@ -2,6 +2,11 @@
 
 > [CMT: Convolutional Neural Networks Meet Vision Transformers](https://arxiv.org/abs/2107.06263)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 CMT is a method to make full use of the advantages of CNN and transformers so that the model could capture long-range
@@ -23,9 +28,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model     | top-1 (%) | top-5 (%) | params(M) | batch size | cards | ms/step | jit_level | recipe                                                                                      | download                                                                             |
-| --------- | --------- | --------- | --------- | ---------- | ----- |---------| --------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| cmt_small | 83.24     | 96.41     | 26.09     | 128        | 8     | 500.64  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/cmt/cmt_small_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/cmt/cmt_small-6858ee22.ckpt) |
+
+| model name | top-1 (%) | top-5 (%) | params(M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                      | download                                                                             |
+| ---------- | --------- | --------- | --------- | ---------- | ----- |---------------| ------- | --------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| cmt_small  | 83.24     | 96.41     | 26.09     | 128        | 8     | 5~7 mins      | 500.64  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/cmt/cmt_small_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/cmt/cmt_small-6858ee22.ckpt) |
 
 
 </div>

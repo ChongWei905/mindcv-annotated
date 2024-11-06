@@ -2,6 +2,11 @@
 
 > [Res2Net: A New Multi-scale Backbone Architecture](https://arxiv.org/abs/1904.01169)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 Res2Net is a novel building block for CNNs proposed by constructing hierarchical residual-like connections within one
@@ -27,9 +32,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-|   model   | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                           | download                                                                                               |
-| :-------: | :-------: | :-------: | :--------: | ---------- | ----- | ------- | --------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
-| res2net50 |   79.33   |   94.64   |   25.76    | 32         | 8     | 39.6    | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/res2net/res2net_50_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/res2net/res2net50-aa758355-910v2.ckpt) |
+
+| model name | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                           | download                                                                                               |
+| :--------: | :-------: | :-------: | :--------: | ---------- | ----- | ------------- | ------- | --------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| res2net50  |   79.33   |   94.64   |   25.76    | 32         | 8     | 2~4 mins      | 39.6    | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/res2net/res2net_50_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/res2net/res2net50-aa758355-910v2.ckpt) |
 
 </div>
 
@@ -38,9 +44,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-|   model   | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                           | download                                                                                 |
-| :-------: | :-------: | :-------: | :--------: | ---------- | ----- | ------- | --------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
-| res2net50 |   79.35   |   94.64   |   25.76    | 32         | 8     | 39.68   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/res2net/res2net_50_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/res2net/res2net50-f42cf71b.ckpt) |
+
+| model name | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                           | download                                                                                 |
+| :--------: | :-------: | :-------: | :--------: | ---------- | ----- | ------------- | ------- | --------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| res2net50  |   79.35   |   94.64   |   25.76    | 32         | 8     | 2~4 mins      | 39.68   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/res2net/res2net_50_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/res2net/res2net50-f42cf71b.ckpt) |
 
 </div>
 

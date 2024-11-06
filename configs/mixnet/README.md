@@ -1,6 +1,11 @@
 # MixNet
 > [MixConv: Mixed Depthwise Convolutional Kernels](https://arxiv.org/abs/1907.09595)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 Depthwise convolution is becoming increasingly popular in modern efficient ConvNets, but its kernel size is often
@@ -26,9 +31,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model    | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                        | download                                                                                             |
-| -------- | --------- | --------- | ---------- | ---------- | ----- | ------- | --------- | --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| mixnet_s | 75.58     | 95.54     | 4.17       | 128        | 8     | 228.03  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/mixnet/mixnet_s_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/mixnet/mixnet_s-fe4fcc63-910v2.ckpt) |
+
+| model name | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                        | download                                                                                             |
+| ---------- | --------- | --------- | ---------- | ---------- | ----- | ------------- | ------- | --------- | --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| mixnet_s   | 75.58     | 95.54     | 4.17       | 128        | 8     | 10~12 mins    | 228.03  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/mixnet/mixnet_s_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/mixnet/mixnet_s-fe4fcc63-910v2.ckpt) |
 
 
 </div>
@@ -38,9 +44,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model    | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                        | download                                                                               |
-| -------- | --------- | --------- | ---------- | ---------- | ----- | ------- | --------- | --------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| mixnet_s | 75.52     | 92.52     | 4.17       | 128        | 8     | 252.49  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/mixnet/mixnet_s_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/mixnet/mixnet_s-2a5ef3a3.ckpt) |
+
+| model name | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                        | download                                                                               |
+| ---------- | --------- | --------- | ---------- | ---------- | ----- | ------------- | ------- | --------- | --------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| mixnet_s   | 75.52     | 92.52     | 4.17       | 128        | 8     | 10~12 mins    | 252.49  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/mixnet/mixnet_s_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/mixnet/mixnet_s-2a5ef3a3.ckpt) |
 
 
 </div>

@@ -1,6 +1,11 @@
 # InceptionV3
 > [InceptionV3: Rethinking the Inception Architecture for Computer Vision](https://arxiv.org/pdf/1512.00567.pdf)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 InceptionV3 is an upgraded version of GoogLeNet. One of the most important improvements of V3 is Factorization, which
@@ -28,9 +33,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model        | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                                 | download                                                                                                       |
-| ------------ | --------- | --------- | ---------- | ---------- | ----- | ------- | --------- | ------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
-| inception_v3 | 79.25     | 94.47     | 27.20      | 32         | 8     | 70.83   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/inceptionv3/inception_v3_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/inception_v3/inception_v3-61a8e9ed-910v2.ckpt) |
+
+| model name   | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                                 | download                                                                                                       |
+| ------------ | --------- | --------- | ---------- | ---------- | ----- | ------------- | ------- | --------- | ------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| inception_v3 | 79.25     | 94.47     | 27.20      | 32         | 8     | 2~4 mins      | 70.83   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/inceptionv3/inception_v3_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/inception_v3/inception_v3-61a8e9ed-910v2.ckpt) |
 
 </div>
 
@@ -39,9 +45,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model        | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                                 | download                                                                                         |
-| ------------ | --------- | --------- | ---------- | ---------- | ----- | ------- | --------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
-| inception_v3 | 79.11     | 94.40     | 27.20      | 32         | 8     | 76.42   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/inceptionv3/inception_v3_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/inception_v3/inception_v3-38f67890.ckpt) |
+
+| model name   | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                                 | download                                                                                         |
+| ------------ | --------- | --------- | ---------- | ---------- | ----- | ------------- | ------- | --------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| inception_v3 | 79.11     | 94.40     | 27.20      | 32         | 8     | 2~4 mins      | 76.42   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/inceptionv3/inception_v3_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/inception_v3/inception_v3-38f67890.ckpt) |
 
 </div>
 

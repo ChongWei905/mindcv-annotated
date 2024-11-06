@@ -2,6 +2,11 @@
 <!--- Guideline: please use url linked to the paper abstract in ArXiv instead of PDF for fast loading.  -->
 > [Dual Path Networks](https://arxiv.org/abs/1707.01629v2)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 <!--- Guideline: Introduce the model and architectures. Please cite if you use/adopt paper explanation from others. -->
 <!--- Guideline: If an architecture table/figure is available in the paper, please put one here and cite for intuitive illustration. -->
@@ -38,9 +43,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                  | download                                                                        |
-| ----- | --------- | --------- | ---------- | ---------- | ----- | ------- | --------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| dpn92 | 79.46     | 94.49     | 37.79      | 32         | 8     | 78.22   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/dpn/dpn92_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/dpn/dpn92-e3e0fca.ckpt) |
+
+| model | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                  | download                                                                        |
+| ----- | --------- | --------- | ---------- | ---------- | ----- |---------------| ------- | --------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| dpn92 | 79.46     | 94.49     | 37.79      | 32         | 8     | 6~8 mins      | 78.22   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/dpn/dpn92_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/dpn/dpn92-e3e0fca.ckpt) |
 
 
 </div>

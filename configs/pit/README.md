@@ -1,6 +1,11 @@
 # PiT
 > [PiT: Rethinking Spatial Dimensions of Vision Transformers](https://arxiv.org/abs/2103.16302v2)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 PiT (Pooling-based Vision Transformer) is an improvement of Vision Transformer (ViT) model proposed by Byeongho Heo in 2021. PiT adds pooling layer on the basis of ViT model, so that the spatial dimension of each layer is reduced like CNN, instead of ViT using the same spatial dimension for all layers. PiT achieves the improved model capability and generalization performance against ViT. [[1](#references)]
@@ -23,9 +28,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model  | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                   | download                                                                                        |
-| ------ | --------- | --------- | ---------- | ---------- | ----- | ------- | --------- | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| pit_ti | 73.26     | 91.57     | 4.85       | 128        | 8     | 266.47  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/pit/pit_ti_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/pit/pit_ti-33466a0d-910v2.ckpt) |
+
+| model name | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                   | download                                                                                        |
+| ---------- | --------- | --------- | ---------- | ---------- | ----- |---------------| ------- | --------- | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| pit_ti     | 73.26     | 91.57     | 4.85       | 128        | 8     | 4~6 mins      | 266.47  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/pit/pit_ti_ascend.yaml) | [weights](https://download-mindspore.osinfra.cn/toolkits/mindcv/pit/pit_ti-33466a0d-910v2.ckpt) |
 
 
 </div>
@@ -35,9 +41,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-| model  | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                   | download                                                                          |
-| ------ | --------- | --------- | ---------- | ---------- | ----- | ------- | --------- | ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| pit_ti | 72.96     | 91.33     | 4.85       | 128        | 8     | 271.50  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/pit/pit_ti_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/pit/pit_ti-e647a593.ckpt) |
+
+| model name | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                   | download                                                                          |
+| ---------- | --------- | --------- | ---------- | ---------- | ----- |---------------| ------- | --------- | ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| pit_ti     | 72.96     | 91.33     | 4.85       | 128        | 8     | 4~6 mins      | 271.50  | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/pit/pit_ti_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/pit/pit_ti-e647a593.ckpt) |
 
 
 </div>

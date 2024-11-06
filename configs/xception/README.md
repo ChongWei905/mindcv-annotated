@@ -2,6 +2,11 @@
 
 > [Xception: Deep Learning with Depthwise Separable Convolutions](https://arxiv.org/pdf/1610.02357.pdf)
 
+## Requirements
+| mindspore | ascend driver |  firmware   | cann toolkit/kernel |
+| :-------: | :-----------: | :---------: | :-----------------: |
+|   2.3.1   |   24.1.RC2    | 7.3.0.1.231 |    8.0.RC2.beta1    |
+
 ## Introduction
 
 Xception is another improved network of InceptionV3 in addition to inceptionV4, using a deep convolutional neural
@@ -33,9 +38,10 @@ Our reproduced model performance on ImageNet-1K is reported as follows.
 <div align="center">
 
 
-|  model   | top-1 (%) | top-5 (%) | params (M) | batch size | cards | ms/step | jit_level | recipe                                                                                          | download                                                                                  |
-| :------: | :-------: | :-------: | :--------: | ---------- | ----- | ------- | --------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| xception |   79.01   |   94.25   |   22.91    | 32         | 8     | 96.78   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/xception/xception_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/xception/xception-2c1e711df.ckpt) |
+
+| model name | top-1 (%) | top-5 (%) | params (M) | batch size | cards | graph compile | ms/step | jit_level | recipe                                                                                          | download                                                                                  |
+| :--------: | :-------: | :-------: | :--------: | ---------- | ----- | ------------- | ------- | --------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+|  xception  |   79.01   |   94.25   |   22.91    | 32         | 8     | 2~4 mins      | 96.78   | O2        | [yaml](https://github.com/mindspore-lab/mindcv/blob/main/configs/xception/xception_ascend.yaml) | [weights](https://download.mindspore.cn/toolkits/mindcv/xception/xception-2c1e711df.ckpt) |
 
 </div>
 
